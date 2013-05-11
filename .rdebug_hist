@@ -1,0 +1,96 @@
+set annotate 3
+frame 0
+break /Users/localredhead/Projects/Jiff3-Salus/app/controllers/salus/admin/teams_controller.rb:115
+break /Users/localredhead/Projects/Jiff3-Salus/app/controllers/salus/admin/teams_controller.rb:115
+display current_user
+display current_user.inspect
+break /Users/localredhead/Projects/Jiff3-Salus/app/controllers/salus/admin/teams_controller.rb:117
+continue 1
+continue 1
+pp nil 
+pp nil 
+display user_ids
+quit unconditionally
+set annotate 3
+frame 0
+finish
+pp @y_min 
+fdate
+finish
+finish
+continue 1
+continue 1
+continue 1
+c
+continue 1
+continue 1
+c
+c
+c
+c
+c
+c
+c
+c
+c
+break /Users/localredhead/Projects/Jiff3-Salus/app/controllers/salus/summary_controller.rb:139
+p nil=nil
+pp nil 
+p nil=nil
+p nil=nil
+p nil=nil
+@weights.count
+c
+c
+quit unconditionally
+set annotate 3
+frame 0
+break /Users/localredhead/Projects/Jiff3-Salus/app/controllers/salus/admin/rr_donnelley_controller.rb:62
+break /Users/localredhead/Projects/Jiff3-Salus/app/controllers/salus/admin/rr_donnelley_controller.rb:64
+c
+display  persisted_file.rrd_history_imports.build(scale_id: row[1], tracking_number: row[3], user_id: row[0]).valid?
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+display row[0]
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+break /Users/localredhead/Projects/Jiff3-Salus/app/controllers/salus/admin/rr_donnelley_controller.rb:62
+break /Users/localredhead/Projects/Jiff3-Salus/app/controllers/salus/admin/rr_donnelley_controller.rb:64
+c
+c
+c
+c
+c
+c
+c
+c
+c
+break /Users/localredhead/Projects/Jiff3-Salus/app/controllers/salus/admin/rr_donnelley_controller.rb:62
+break /Users/localredhead/Projects/Jiff3-Salus/app/controllers/salus/admin/rr_donnelley_controller.rb:64
+Breakpoint 5 filec /Users/localredhead/Projects/Jiff3-Salus/app/controllers/salus/admin/rr_donnelley_controller.rb, line 62
+c
+c
+c
+c
+c
+c
+quit unconditionally
