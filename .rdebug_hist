@@ -94,3 +94,44 @@ c
 c
 c
 quit unconditionally
+set annotate 3
+frame 0
+current_user
+current_user.email
+Time.now
+help
+display current_user
+display Time.now
+display current_weight(current_user.current_time)
+undisplay 3
+display current_weight(current_user.current_time).inspect
+current_weight.inspect
+c
+c
+break /Users/localredhead/Projects/Jiff3-Salus/app/views/salus/dashboard/tasks/_track_weight.html.erb:15
+c
+break /Users/localredhead/Projects/Jiff3-Salus/lib/program_eligibility.rb:171
+help
+next
+next
+next
+next
+next
+next
+next
+next
+next
+continue
+continue
+quit unconditionally
+display time
+display current_user.program_weights.first.captured_at
+display current_user.program_weights
+display weighings.first
+help
+ @user.program_weights.first
+#<ProgramWeight id: 4846, user_id: 1335, bmi: nil, lean_mass: nil, weight: 75.0005, captured_at: "2013-05-10 18:08:44", created_at: "2013-05-10 18:08:44", updated_at: "2013-05-10 18:08:45", action_id: nil, is_deleted: false, originator_e: 2, type: "ProgramWeight", state: 5>
+(rdb:1)@start_date 
+@start_date
+@user.program_weights.baseline_to_validate
+quit unconditionally
