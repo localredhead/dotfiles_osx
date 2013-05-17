@@ -1,3 +1,3 @@
 #!/bin/sh
 
-/Applications/Emacs.app/Contents/MacOS/Emacs --daemon
+TERM=xterm-256color /Applications/Emacs.app/Contents/MacOS/Emacs --daemon
