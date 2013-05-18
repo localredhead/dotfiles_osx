@@ -14,6 +14,7 @@ export TERM=xterm-256color
 export ALTERNATE_EDITOR="emacsclient -c" 
 export EDITOR="emacsclient -t"
 export VISUAL="emacsclient -c"
+export CLICOLOR=1
 
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
 alias emacsclient='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
