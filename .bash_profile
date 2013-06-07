@@ -16,8 +16,8 @@ export EDITOR="emacsclient -t"
 export VISUAL="emacsclient -c"
 export CLICOLOR=1
 
-alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
-alias emacsclient='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
-alias vi='emacsclient -t'
-alias vim='emacsclient -t'
-alias nano='emacsclient -t'
+#alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+#alias emacsclient='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
+alias vi='emacs -nw'
+alias vim='emacsclient -c'
+alias nano='emacs -nw'

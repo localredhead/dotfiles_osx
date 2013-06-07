@@ -1,5 +1,3 @@
-IRB.conf[:PROMPT_MODE] = :DEFAULT
-
 def pbcopy(input)
   str = input.to_s
   IO.popen('pbcopy', 'w') { |f| f << str }
@@ -9,3 +7,5 @@ end
 def pbpaste
   `pbpaste`
 end
+
+IRB.conf[:PROMPT_MODE] = :DEFAULT
