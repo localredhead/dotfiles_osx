@@ -1,9 +1,7 @@
-export TERM=xterm-256color
-export CLICOLOR=1
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+#export TERM=xterm-256color
+#export CLICOLOR=1
 
 #if [[ ! $TERM =~ screen ]]; then
 #   exec tmux
 #fi
+eval "$(rbenv init -)"
