@@ -16,6 +16,7 @@ if [ "$(command -v rbenv)" ]; then
     source ~/.bash_profile
     echo "and rails dependencies: terminator, zeus, powder"
     gem install terminator
+    gem install tmuxinator
     gem install zeus
     gem install powder
     gem install rsense
