@@ -30,6 +30,13 @@ export PATH="$(brew --prefix)/bin:$PATH"
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
+
+#NPM prefix
+export PREFIX="$(npm config get prefix)"
+
+
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+export PATH="~/.node/bin:$PATH"
 export PATH

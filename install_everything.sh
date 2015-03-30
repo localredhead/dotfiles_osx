@@ -31,9 +31,9 @@ if [ "$(command -v nvm)" ]; then
     echo "$(command -v nvm)"
     nvm install stable
     nvm alias default stable
+    mkdir ~/.nvm/
 else
     echo "NVM not installed"
-    mkdir ~/.nvm/
 fi
 
 
@@ -42,16 +42,16 @@ if [ "$(command -v pow)" ]; then
     echo "configuring POW and Postgres with suggestions from Homebrew"
     echo "POW ==> Caveats"
     echo "................................."
-    #brew info pow
-    mkdir -p ~/Library/Application\ Support/Pow/Hosts
-    ln -s ~/Library/Application\ Support/Pow/Hosts ~/.pow
-    sudo pow --install-system
-    pow --install-local
-    sudo chmod 600 ~/Library/LaunchAgents/*.plist
-    sudo chown $USER ~/Library/LaunchDaemons/cx.pow.firewall.plist
-    sudo chown $USER ~/Library/LaunchAgents/cx.pow.powd.plist
-    sudo launchctl load -w /Library/LaunchDaemons/cx.pow.firewall.plist
-    sudo launchctl load -w ~/Library/LaunchAgents/cx.pow.powd.plist
+    brew info pow
+    # mkdir -p ~/Library/Application\ Support/Pow/Hosts
+    # ln -s ~/Library/Application\ Support/Pow/Hosts ~/.pow
+    # sudo pow --install-system
+    # pow --install-local
+    # sudo chmod 600 ~/Library/LaunchAgents/*.plist
+    # sudo chown $USER ~/Library/LaunchDaemons/cx.pow.firewall.plist
+    # sudo chown $USER ~/Library/LaunchAgents/cx.pow.powd.plist
+    # sudo launchctl load -w /Library/LaunchDaemons/cx.pow.firewall.plist
+    # sudo launchctl load -w ~/Library/LaunchAgents/cx.pow.powd.plist
     echo "Done with POW"
 fi
 
@@ -60,11 +60,11 @@ fi
 if [ "$(command -v postgres)" ]; then
    echo "................................."
    echo "Postgres ==> Caveats"
-   #brew info postgres
-   sudo chmod 600 ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
-   sudo chown $USER ~/Library/LaunchDaemons/homebrew.mxcl.postgresql.plist
-   sudo launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
-   echo "Done with Postgres"
+   brew info postgres
+   # sudo chmod 600 ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+   # sudo chown $USER ~/Library/LaunchDaemons/homebrew.mxcl.postgresql.plist
+   # sudo launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+   # echo "Done with Postgres"
    echo "................................."
 fi
 
@@ -73,7 +73,8 @@ fi
 echo "if these aren't working run brew info pow or brew info postgres"
 echo "................................."
 
-
+brew info redis
+brew info memcached
 
 if [ "$(command -v npm)" ]; then
     echo "..npm binary found"
