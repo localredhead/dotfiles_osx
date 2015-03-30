@@ -14,12 +14,13 @@ if [ "$(command -v rbenv)" ]; then
     rbenv install $RESP
     rbenv global $RESP
     source ~/.bash_profile
-    echo "and rails dependencies: terminator, zeus, powder"
+    echo "personal rails dependencies: terminator, zeus, powder"
     gem install terminator
     gem install tmuxinator
     gem install zeus
     gem install powder
     gem install rsense
+    gem install mailcatcher
     echo "................................."    
 fi
 
