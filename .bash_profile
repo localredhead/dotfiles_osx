@@ -1,6 +1,8 @@
 if [ -f ~/.bashrc ]; then
     source ~/.bashrc
 fi
+
+#RBENV
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export RBENV_ROOT=/usr/local/var/rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
@@ -22,9 +24,12 @@ export MAILER_USE_MAILCATCHER=true
 
 # slack
 export SLACK_TOKEN=
-
-source $(brew --prefix nvm)/nvm.sh
 export PATH="$(brew --prefix)/bin:$PATH"
+
+#NVM
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH
