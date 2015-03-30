@@ -1,0 +1,50 @@
+# ~/.tmuxinator/archer.yml
+
+name: archer
+root: ~/Projects/archer/
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+windows:
+  - foreman:
+      panes:
+        - foreman start -f Procfile.dev
+        - htop
+  # - archer:
+  #     layout: main-horizontal
+  #     panes:
+  #       - sleep 5 && zeus server
+  #       - sleep 5 && zeus rake resque:work
+  - logs:
+      layout: main-horizontal
+      panes:
+        - cd ~/Projects/archer && powder applog
+        - powder log
+        - cd ~/Projects/shop && powder applog
+  # - shop:
+  #     pre: cd ~/Projects/shop
+  #     panes:
+  #       - sleep 5 && zeus server -p 3001
+  # - gift-cards-client:
+  #     pre: cd ~/Projects/gift-cards-client
+  #     panes:
+  #       - sleep 5 && npm run dev
+  - guard:
+      - sleep 5 && guard -B -G .Guardfile
+  - console:
+      - sleep 5 && zeus console
+  - editor:
+        - emacsclient -t

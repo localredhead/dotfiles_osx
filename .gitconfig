@@ -1,0 +1,16 @@
+[user]
+	name = localredhead
+	email = levi.strope@gmail.com
+[push]
+	default = simple
+[github]
+	user = localredhead
+	password = 
+	oauth-token = 
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+[credential]
+	helper = osxkeychain
+[pull]
+	rebase = false
