@@ -76,7 +76,7 @@ echo "................................."
 if [ "$(command -v npm)" ]; then
     echo "..npm binary found"
     echo "...installing node dependencies: tern jsxhint jshint"
-    npm install -g tern jsxhint jshint
+    npm install -g tern jsxhint jshint bower
     echo "................................."
 fi
 
