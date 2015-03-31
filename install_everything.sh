@@ -26,15 +26,17 @@ fi
 
 
 
-if [ "$(command -v nvm)" ]; then
-    echo "................................."    
-    echo "$(command -v nvm)"
-    nvm install stable
-    nvm alias default stable
-    mkdir ~/.nvm/
-else
-    echo "NVM not installed"
-fi
+echo "Used brew versions to grab a specific node version already."
+
+# if [ "$(command -v nvm)" ]; then
+#     echo "................................."    
+#     echo "$(command -v nvm)"
+#     nvm install stable
+#     nvm alias default stable
+#     mkdir ~/.nvm/
+# else
+#     echo "NVM not installed"
+# fi
 
 
 
@@ -43,15 +45,15 @@ if [ "$(command -v pow)" ]; then
     echo "POW ==> Caveats"
     echo "................................."
     brew info pow
-    # mkdir -p ~/Library/Application\ Support/Pow/Hosts
-    # ln -s ~/Library/Application\ Support/Pow/Hosts ~/.pow
-    # sudo pow --install-system
-    # pow --install-local
-    # sudo chmod 600 ~/Library/LaunchAgents/*.plist
-    # sudo chown $USER ~/Library/LaunchDaemons/cx.pow.firewall.plist
-    # sudo chown $USER ~/Library/LaunchAgents/cx.pow.powd.plist
-    # sudo launchctl load -w /Library/LaunchDaemons/cx.pow.firewall.plist
-    # sudo launchctl load -w ~/Library/LaunchAgents/cx.pow.powd.plist
+    mkdir -p ~/Library/Application\ Support/Pow/Hosts
+    ln -s ~/Library/Application\ Support/Pow/Hosts ~/.pow
+    sudo pow --install-system
+    pow --install-local
+    sudo chmod 600 ~/Library/LaunchAgents/*.plist
+    sudo chown $USER ~/Library/LaunchDaemons/cx.pow.firewall.plist
+    sudo chown $USER ~/Library/LaunchAgents/cx.pow.powd.plist
+    sudo launchctl load -w /Library/LaunchDaemons/cx.pow.firewall.plist
+    sudo launchctl load -w ~/Library/LaunchAgents/cx.pow.powd.plist
     echo "Done with POW"
 fi
 
@@ -61,10 +63,10 @@ if [ "$(command -v postgres)" ]; then
    echo "................................."
    echo "Postgres ==> Caveats"
    brew info postgres
-   # sudo chmod 600 ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
-   # sudo chown $USER ~/Library/LaunchDaemons/homebrew.mxcl.postgresql.plist
-   # sudo launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
-   # echo "Done with Postgres"
+   sudo chmod 600 ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+   sudo chown $USER ~/Library/LaunchDaemons/homebrew.mxcl.postgresql.plist
+   sudo launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+   echo "Done with Postgres"
    echo "................................."
 fi
 
@@ -80,6 +82,7 @@ if [ "$(command -v npm)" ]; then
     echo "..npm binary found"
     echo "...installing node dependencies: tern jsxhint jshint"
     npm install -g tern jsxhint jshint bower
+    echo "think about installing ember-cli -g ?"
     echo "................................."
 fi
 

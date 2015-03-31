@@ -27,8 +27,8 @@ export SLACK_TOKEN=
 export PATH="$(brew --prefix)/bin:$PATH"
 
 #NVM
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
+#export NVM_DIR=~/.nvm
+#source $(brew --prefix nvm)/nvm.sh
 
 
 #NPM prefix
@@ -40,3 +40,5 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 export PATH="~/.node/bin:$PATH"
 export PATH
+#export PATH="$HOME/.ndenv/bin:$PATH"
+#eval "$(ndenv init -)"
