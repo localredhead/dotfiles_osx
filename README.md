@@ -25,7 +25,7 @@ A few key mentions:
 - **Evernote**            - will eventually change to org-mode
 - **BetterTouchTool**     - best window snap tool yet
 - **RecordIt**            - best way to report issues.  Animated Gif screencasts :)
-- ~~**NVM**               - Node version manager.~~  Replaced with ```brew tap Homebrew/hombrew-versions && brew install node010```
+- ~~**NVM**               - Node version manager.~~  Replaced with ```brew tap Homebrew/homebrew-versions && brew install node010```
 
 1. ```chmod +x post-checkout.sh && ./post-checkout.sh```
 1. Symlink all things needed into ~/  (i.e. .bash_profile, .bash_rc, .bin, etc.)
