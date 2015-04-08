@@ -7,4 +7,4 @@
 127.0.0.1	localhost
 255.255.255.255	broadcasthost
 ::1             localhost 
-127.0.0.1 *.dev
+127.0.0.1 www.archer.dev archer.dev trumaker.dev shop.dev admin.archer.dev shopping.archer.dev outfitter.archer.dev client.archer.dev www.trumaker.dev shop.archer.dev
