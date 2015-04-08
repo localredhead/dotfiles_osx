@@ -24,8 +24,6 @@ if [ "$(command -v rbenv)" ]; then
     echo "................................."    
 fi
 
-
-
 echo "Used brew versions to grab a specific node version already."
 
 # if [ "$(command -v nvm)" ]; then
@@ -37,8 +35,6 @@ echo "Used brew versions to grab a specific node version already."
 # else
 #     echo "NVM not installed"
 # fi
-
-
 
 if [ "$(command -v pow)" ]; then
     echo "configuring POW and Postgres with suggestions from Homebrew"
@@ -57,8 +53,6 @@ if [ "$(command -v pow)" ]; then
     echo "Done with POW"
 fi
 
-
-
 if [ "$(command -v postgres)" ]; then
    echo "................................."
    echo "Postgres ==> Caveats"
@@ -69,8 +63,6 @@ if [ "$(command -v postgres)" ]; then
    echo "Done with Postgres"
    echo "................................."
 fi
-
-
 
 echo "if these aren't working run brew info pow or brew info postgres"
 echo "................................."
@@ -86,7 +78,6 @@ if [ "$(command -v npm)" ]; then
     echo "................................."
 fi
 
-
 echo "TODO:"
 echo "- configure .powenv in projects"
 echo "- update development.rb's,"
@@ -95,5 +86,5 @@ echo "-- settings.yml's"
 echo "-- ssh keys? (github)"
 echo "-- Symlink all pow apps with powder"
 echo "- symlink .rsense and update its contents"
-echo "-- install http://anvilformac.com/"
+echo "-- symlink hosts to /etc/hosts"
 echo "- Reboot"

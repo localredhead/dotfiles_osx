@@ -1,0 +1,24 @@
+#Start mailcatcher (http://127.0.0.1:1080/)
+mail: mailcatcher -f
+ 
+#Start main zeus server
+zeus_archer: sh -c 'cd ~/Projects/archer/ && exec zeus start'
+ 
+#Start Shop zeus server
+zeus_shop: sh -c 'cd ~/Projects/shop/ && exec zeus start'
+
+# #Start Shop web
+# www.archer: sleep 2; sh -c 'cd ~/Projects/shop/ && exec zeus server -p 3001'
+
+# #Start Archer web
+# archer: sleep 4; sh -c 'cd ~/Projects/archer/ && exec zeus server -p 3000'
+
+#Start our worker thread (start outside of foreman for debugging with tmuxinator).
+resque: sleep 3; sh -c 'cd ~/Projects/archer/ && exec env TERM_CHILD=1 zeus rake resque:work'
+ 
+#Start guard (start outside of foreman with tmuxinator for now).
+#guard: sleep 2; guard -i -B -G .Guardfile
+ 
+#gift card client
+gift: sh -c 'cd ~/Projects/gift-cards-client/ && exec npm run dev -f'
+
