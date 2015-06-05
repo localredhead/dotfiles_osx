@@ -1,9 +1,10 @@
 require 'awesome_print'
 
-if ENV['TERM'] == 'emacs'
+if ENV['TERM'] == 'emacs' || ENV["INSIDE_EMACS"]
   Pry.config.color = false
   Pry.config.pager = false
   Pry.config.auto_indent = false
+  Pry.config.correct_indent = false
 else
   Pry.color = true
   Pry.config.color = true

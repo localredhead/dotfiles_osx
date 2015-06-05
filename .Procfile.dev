@@ -1,6 +1,6 @@
 #Start mailcatcher (http://127.0.0.1:1080/)
 #mail: mailcatcher -f
-mail: catchme --f true
+#mail: catchme --f true
  
 #Start main zeus server
 zeus_archer: sh -c 'cd ~/Projects/archer/ && exec zeus start'
@@ -21,5 +21,5 @@ resque: sleep 3; sh -c 'cd ~/Projects/archer/ && exec env TERM_CHILD=1 zeus rake
 #guard: sleep 2; guard -i -B -G .Guardfile
  
 #gift card client
-#gift: sh -c 'cd ~/Projects/gift-cards-client/ && exec npm run dev -f'
+gift: sh -c 'cd ~/Projects/gift-cards-client/ && exec npm run dev -f'
 
