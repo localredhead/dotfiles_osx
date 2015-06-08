@@ -16,9 +16,9 @@ export CFLAGS=-O0
 
 
 function get_brew {
-    brew tap Homebrew/brewdler
+    brew tap Homebrew/bundle
     cd .bin
-    brew brewdle
+    brew bundle
     brew linkapps
     brew link ctags
     brew cleanup
