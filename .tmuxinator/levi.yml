@@ -3,10 +3,9 @@ root: ~/Development/sharespost2
 
 windows:
   - foreman:
-      pre: vagrant up
+      pre: vagrant up && vagrant ssh
       panes:
-      - sleep 5 && vagrant ssh
-      - sleep 7 && foreman start
+        - sleep 5 && foreman start
   - console:
       pre: vagrant ssh
       panes:
