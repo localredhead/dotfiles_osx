@@ -14,10 +14,10 @@ windows:
       pre: vagrant ssh
       panes:
         - bin/rails dbconsole
-  - logs:
-      pre: vagrant ssh
-      panes:
-        - cd log && tail -f development.log
   - vagrant:
       panes:
         - vagrant ssh
+  # - logs:
+  #     pre: vagrant ssh
+  #     panes:
+  #       - cd log && tail -f development.log
