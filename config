@@ -1,0 +1,7 @@
+Host levi_github
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/levistrope
+  IdentitiesOnly yes
+  HostName github.com
+  User levi.strope@gmail.com
+  

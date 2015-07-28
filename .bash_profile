@@ -26,11 +26,6 @@ export MAILER_USE_MAILCATCHER=true
 export SLACK_TOKEN=
 export PATH="$(brew --prefix)/bin:$PATH"
 
-#NVM
-#export NVM_DIR=~/.nvm
-#source $(brew --prefix nvm)/nvm.sh
-
-
 #NPM prefix
 export PREFIX="$(npm config get prefix)"
 
