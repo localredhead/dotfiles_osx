@@ -1,5 +1,5 @@
 name: levi
-root: ~/Development/sharespost2
+root: ~/Projects/sharespost2
 
 windows:
   - foreman:
