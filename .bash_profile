@@ -37,3 +37,4 @@ export PATH="~/.node/bin:$PATH"
 export PATH
 #export PATH="$HOME/.ndenv/bin:$PATH"
 #eval "$(ndenv init -)"
+export FORWARD_SQL_PORTS=1
