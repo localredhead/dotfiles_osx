@@ -7,11 +7,11 @@ There are advantages to this setup if external deps are installed with homebrew,
 The _post-checkout_ script sets up a few dependencies:
 
 1. It installs Homebrew
-1. It installs Homebew Bundler
+1. It installs Homebew Bundler https://github.com/Homebrew/homebrew-bundle
 1. It installs Exuberent Ctags because they require special compilation flags before brew install is run.
 1. It installs xcode cli tools.
 
-After these dependencies have been met it uses Brewdle to install everything listed in .bin/Brewdle.
+After these dependencies have been met it uses homebrew bundler to install everything listed in .bundle/Brewfile.
 A few key mentions:
 - **Emacs**              
 - **Postgres**            
@@ -21,7 +21,12 @@ A few key mentions:
 - **The silver searcher** - faster than grep
 - **Chrome and Firefox**  - ¯\_(ツ)_/¯ 
 - **rbenv**               - RVM replacement
-
+- **Hack Font**           - Great monospace font.  Other fonts can be installed with: ```brew cask install font-<name>```
+- **Java**
+- **GO**
+- **Pandoc**
+- **Openssl 1.0**
+- **Plantuml**
 - It attempts to install gerrit.  WIP.
 
 ### Installation
@@ -38,3 +43,6 @@ That should prompt as necessary and install all the things.  If it fails, fix th
 1. At the very least, Rsense needs setup.  After symlinking ```.rsense``` to ```~/``` run the following:
 ```ruby /usr/local/Cellar/rsense/0.3/libexec/etc/config.rb >> .rsense```
 ** verify your rsense version number.
+
+
+####You may have to manually install pdftk, xquartz
