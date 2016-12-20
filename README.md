@@ -13,26 +13,28 @@ The _post-checkout_ script sets up a few dependencies:
 
 After these dependencies have been met it uses Brewdle to install everything listed in .bin/Brewdle.
 A few key mentions:
-- **Emacs**               > vim
-- **Postgres**            - both Postgres.app and postgres server.
+- **Emacs**              
+- **Postgres**            
 - **rsense**              - ruby code completion ;)
-- **ctags**               - I have them actually working. IN EMACS. double ;)
+- **ctags**               - I have them actually working.
 - **Node.js**             - enables tern.js (js linter)
-- **The silver searcher** - faster
+- **The silver searcher** - faster than grep
 - **Chrome and Firefox**  - ¯\_(ツ)_/¯ 
-- **rbenv**               - RVM what? who?
+- **rbenv**               - RVM replacement
+
+- It attempts to install gerrit.  WIP.
 
 ### Installation
 
-1. ```chmod +x post-checkout.sh && ./post-checkout.sh```
-1. Symlink all things needed into ~/  (i.e. .bash_profile, .bash_rc, .bin, etc.)
-
-After the symlinks have been set, execute ```install-everything.sh```.  The purpose of this file is to configure RBENV, POW, NVM, TMuxinator, and NPM installs a few development environment dependencies, ```tern```, ```jsxhint```, ```jshint```.
-
+1. ```chmod +x post-checkout.sh```
 1. ```chmod +x install-everything.sh```
+1. ```./post-checkout.sh```
+
+That should prompt as necessary and install all the things.  If it fails, fix the error and run the following by hand.  Post-checkout should run it without intervention if all goes well.
 1. ```./install_everything.sh```
 
 
 ### After install steps
 1. At the very least, Rsense needs setup.  After symlinking ```.rsense``` to ```~/``` run the following:
 ```ruby /usr/local/Cellar/rsense/0.3/libexec/etc/config.rb >> .rsense```
+** verify your rsense version number.
