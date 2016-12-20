@@ -14,49 +14,20 @@ if [ "$(command -v rbenv)" ]; then
     rbenv install $RESP
     rbenv global $RESP
     source ~/.bash_profile
-    echo "personal rails dependencies: terminator, zeus, powder"
-    gem install terminator
-    gem install tmuxinator
-    gem install zeus
-    gem install powder
+    gem install rubygems-update
+    update_rubygems
+    gem update --system
+    gem install bundler
     gem install rsense
-    gem install mailcatcher
-    echo "................................."    
-fi
-
-echo "Used brew versions to grab a specific node version already."
-
-# if [ "$(command -v nvm)" ]; then
-#     echo "................................."    
-#     echo "$(command -v nvm)"
-#     nvm install stable
-#     nvm alias default stable
-#     mkdir ~/.nvm/
-# else
-#     echo "NVM not installed"
-# fi
-
-if [ "$(command -v pow)" ]; then
-    echo "configuring POW and Postgres with suggestions from Homebrew"
-    echo "POW ==> Caveats"
-    echo "................................."
-    brew info pow
-    mkdir -p ~/Library/Application\ Support/Pow/Hosts
-    ln -s ~/Library/Application\ Support/Pow/Hosts ~/.pow
-    sudo pow --install-system
-    pow --install-local
-    sudo chmod 600 ~/Library/LaunchAgents/*.plist
-    sudo chown $USER ~/Library/LaunchDaemons/cx.pow.firewall.plist
-    sudo chown $USER ~/Library/LaunchAgents/cx.pow.powd.plist
-    sudo launchctl load -w /Library/LaunchDaemons/cx.pow.firewall.plist
-    sudo launchctl load -w ~/Library/LaunchAgents/cx.pow.powd.plist
-    echo "Done with POW"
+    gem install awesome_print
+    Echo "................................."
 fi
 
 if [ "$(command -v postgres)" ]; then
    echo "................................."
    echo "Postgres ==> Caveats"
    brew info postgres
+   echo "Please enter root password"
    sudo chmod 600 ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
    sudo chown $USER ~/Library/LaunchDaemons/homebrew.mxcl.postgresql.plist
    sudo launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
@@ -64,27 +35,48 @@ if [ "$(command -v postgres)" ]; then
    echo "................................."
 fi
 
-echo "if these aren't working run brew info pow or brew info postgres"
+echo "run brew info postgres if there are errors."
 echo "................................."
 
 brew info redis
-brew info memcached
+#brew info memcached
 
 if [ "$(command -v npm)" ]; then
     echo "..npm binary found"
+    npm config set proxy http://proxy.company.com:8080
+    npm config set https-proxy http://proxy.company.com:8080
     echo "...installing node dependencies: tern jsxhint jshint"
     npm install -g tern jsxhint jshint bower
     echo "think about installing ember-cli -g ?"
     echo "................................."
 fi
 
+echo "install Gerrit"
+sudo easy_install pip
+sudo pip install --upgrade setuptools
+sudo pip install git-review
+
+echo "setup hosts file to utilize flexpaper"
+echo "please enter password for sudo"
+sudo echo "127.0.0.1       adm.dev.prv" >> /etc/hosts
+
+echo "setup postgres login roles for SMTX"
+echo "make password the same as username"
+createuser -P -s -e smp_dev
+createuser -P -s -e smp_test
+
+echo "Running this: `ruby /usr/local/Cellar/rsense/0.3/libexec/etc/config.rb >> .rsense`"
+ruby -e  /usr/local/Cellar/rsense/0.3/libexec/etc/config.rb >> .rsense
+
+export RBENV_ROOT=/usr/local/var/rbenv >> ~/.bash_profile
+
+brew services restart redis
+#brew services restart memcached
+brew services restart postgresql
+
 echo "TODO:"
-echo "- configure .powenv in projects"
 echo "- update development.rb's,"
 echo "-- database.yml's,"
 echo "-- settings.yml's"
 echo "-- ssh keys? (github)"
-echo "-- Symlink all pow apps with powder"
-echo "- symlink .rsense and update its contents"
-echo "-- symlink hosts to /etc/hosts and dscacheutil -flushcache"
 echo "- Reboot"
