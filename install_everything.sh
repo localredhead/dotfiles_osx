@@ -31,6 +31,8 @@ if [ "$(command -v postgres)" ]; then
    sudo chmod 600 ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
    sudo chown $USER ~/Library/LaunchDaemons/homebrew.mxcl.postgresql.plist
    sudo launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+   #default postgres user
+   createuser -P -s -e postgres
    echo "Done with Postgres"
    echo "................................."
 fi
