@@ -62,8 +62,6 @@ echo "setup hosts file to utilize flexpaper"
 echo "please enter password for sudo"
 sudo echo "127.0.0.1       adm.dev.prv" >> /etc/hosts
 
-echo "setup postgres login roles for SMTX"
-echo "make password the same as username"
 createuser -P -s -e smp_dev
 createuser -P -s -e smp_test
 
