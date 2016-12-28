@@ -41,7 +41,7 @@ brew 'pth'
 brew 'dirmngr'
 brew 'doxygen'
 brew 'ecj'
-brew 'emacs', args: ['HEAD', 'with-cocoa', 'with-gnutls', 'with-imagemagick', 'dbus', 'mailutils'], restart_service: true
+brew 'emacs', args: ['HEAD', 'with-cocoa', 'with-gnutls', 'with-imagemagick', 'dbus', 'mailutils', 'srgb'], restart_service: true
 brew 'jpeg'
 brew 'libtiff'
 brew 'webp'
