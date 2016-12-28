@@ -30,9 +30,9 @@ function get_brew {
     brew bundle exec -- brew bundle install
     brew unlink emacs
     brew link --overwrite emacs
-    brew linkapps
     brew services restart emacs
-    brew link ctags
+    brew link --overwrite ctags
+    brew linkapps
     brew cleanup
     brew prune
     brew cask cleanup
