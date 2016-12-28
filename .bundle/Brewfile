@@ -42,7 +42,7 @@ brew 'pth'
 brew 'dirmngr'
 brew 'doxygen'
 brew 'ecj'
-brew 'emacs', args: ['HEAD', 'with-cocoa', 'with-gnutls', 'with-imagemagick'], restart_service: true
+brew 'emacs', args: ['HEAD', 'with-cocoa', 'with-gnutls', 'with-imagemagick', 'dbus', 'mailutils'], restart_service: true
 brew 'pkg-config'
 brew 'gobject-introspection'
 brew 'jpeg'

@@ -31,6 +31,7 @@ function get_brew {
     brew unlink emacs
     brew link --overwrite emacs
     brew linkapps
+    brew services restart emacs
     brew link ctags
     brew cleanup
     brew prune
