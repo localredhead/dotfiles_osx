@@ -8,7 +8,9 @@ export RBENV_ROOT=/usr/local/var/rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export TERM=xterm-256color
-export ALTERNATE_EDITOR="" EDITOR=emacsclient VISUAL=emacsclient
+export ALTERNATE_EDITOR=""
+export EDITOR="emacsclient -t"
+export VISUAL="emacsclient -c -a "
 export CLICOLOR=1
 export ENHANCED_RAILS_CONSOLE=false
 alias emacs='emacsclient -t'

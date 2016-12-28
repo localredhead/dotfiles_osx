@@ -8,6 +8,10 @@ sudo chown -R $USER ~/Library
 source ~/.bash_profile
 
 if [ "$(command -v rbenv)" ]; then
+    read -p "git config user email:__ " EMAIL
+    read -p "git config user name:__ " NAME
+    git config --global user.email "$EMAIL"
+    git config --global user.name "$NAME"
     export CC=/usr/bin/gcc
     read -p "rbenv found.  Which ruby to install? 2.2.1 ?_ " RESP
     echo "...installing ruby $RESP"

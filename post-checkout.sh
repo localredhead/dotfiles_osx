@@ -64,19 +64,15 @@ mv -f .tmux.conf .dotfiles_bak/
 mv -f .irbrc .dotfiles_bak/
 mv -f .profile .dotfiles_bak/
 
-echo "SYMLINK all the bash scripts in the root of $dotfiles_home"
-
-ln -sf "$dotfiles_home"/.bashrc .bashrc
-ln -sf "$dotfiles_home"/.bash_profile .bash_profile
-ln -sf "$dotfiles_home"/.guardrc .guardrc
-ln -sf "$dotfiles_home"/.irbrc .irbrc
-ln -sf "$dotfiles_home"/.profile .profile
-ln -sf "$dotfiles_home"/.rsense .rsense
-ln -sf "$dotfiles_home"/.tmux.conf .tmux.conf
-
-echo "................................."
-echo ".... and run install_everything.sh"
+echo "Use GNU STOW to symlink scripts in the root of $dotfiles_home"
 
 cd "$dotfiles_home"
 set_working_dir
+stow -t ~ bash
+stow -t ~ ruby
+stow -t ~ git
+stow -t ~ tmux
+
+echo "................................."
+echo ".... and run install_everything.sh (requires sudo)"
 ./install_everything.sh
