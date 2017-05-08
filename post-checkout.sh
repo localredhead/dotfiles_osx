@@ -73,6 +73,7 @@ stow -t ~ bash
 stow -t ~ ruby
 stow -t ~ git
 stow -t ~ tmux
+stow -t ~ emacs
 
 echo "................................."
 echo ".... and run install_everything.sh (requires sudo)"
