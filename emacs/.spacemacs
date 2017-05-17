@@ -76,7 +76,11 @@ values."
    dotspacemacs-additional-packages '(ag
                                       key-chord
                                       helm-cmd-t
+                                      org-page
+                                      blog-admin
+                                      ego
                                       )
+
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -89,6 +93,7 @@ values."
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
    dotspacemacs-install-packages 'used-only))
+
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -148,14 +153,14 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(apropospriate-dark
+                         apropospriate-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 15
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -322,8 +327,6 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-
-
   )
 
 (defun dotspacemacs/user-config ()
@@ -335,6 +338,54 @@ explicitly specified that a variable should be set before a package is loaded,
 
 you should place your code here."
 
+  (require 'ego)
+  (ego-add-to-alist 'ego-project-config-alist
+                  '(("localredhead"
+                     :repository-directory "~/Projects/localredhead.github.io"
+                     :repository-org-branch "source" ;
+                     :repository-html-branch "master" ;
+                     :site-domain "https://localredhead.github.io"
+                     :site-main-title "L. Strope"
+                     :site-sub-title "entropy in action"
+                     :theme (me)
+                     :summary (("Archive" :year :updates 50) ("tags" :tags))
+                     :default-category "blog"
+                     :about ("About" "/about/")
+                     :source-browse-url ("Github" "https://github.com/localredhead")
+                     :personal-avatar "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAnvAAAAJGNiOTc0NDI0LTZlMDYtNDdiNS1hOGZmLTU0ZTNlZTZlZjMwMQ.jpg"
+                     :confound-email t
+                     :ignore-file-name-regexp
+                     "readme.org"
+                     :category-ignore-list ("themes" "assets" "notes" "moleskin"))
+                    ;; more projects or sites config can be added here
+                    ))
+
+  ;; ORG
+  (setq org-default-notes-file (concat org-directory "/remember.org.gpg"))
+  (setq org-startup-with-inline-images t)
+  (setq org-refile-targets '((org-agenda-files . (:maxlevel . 9))))
+  (setq org-completion-use-ido t)
+
+  (define-key global-map "\C-cc" 'org-capture)
+
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (org-indent-mode)))
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((shell         . t)
+     (js         . t)
+     (emacs-lisp . t)
+     (perl       . t)
+     (scala      . t)
+     (clojure    . t)
+     (python     . t)
+     (ruby       . t)
+     (dot        . t)
+     (css        . t)
+     (plantuml   . t)))
+
   ;;enable key-chord-mode
   (key-chord-mode +1)
 
@@ -345,6 +396,8 @@ you should place your code here."
 
   ;;make life easier
   (global-set-key (kbd "M-t") 'helm-projectile)
+  (key-chord-define-global "VV" 'eshell)
+  (key-chord-define-global "TT" 'multi-term)
   (key-chord-define-global "xg" 'magit-status)
   (key-chord-define-global "kk" 'kill-whole-line)
   (key-chord-define-global "jj" 'avy-goto-word-1)
@@ -354,6 +407,25 @@ you should place your code here."
   (key-chord-define-global "uu" 'undo-tree-visualize)
   (key-chord-define-global "xx" 'execute-extended-command)
   (key-chord-define-global "yy" 'browse-kill-ring)
+
+  (defun rails-audit-hook()
+    (defun rails-best-practices (rails-app-dir)
+      "Run rails_best_practices"
+      (interactive "DRails app base dir: ")
+      (let ((exe (executable-find "rails_best_practices")))
+        (if exe
+            (ruby-compilation-run (concat exe " " (expand-file-name rails-app-dir)))
+          (message "rails_best_practices executable not found!")))))
+
+  (add-hook 'ruby-mode-hook 'rails-audit-hook)
+
+  ;; Hack for emacs 26
+  (if (not (version<= emacs-version "26"))
+      (defalias 'display-buffer-in-major-side-window 'window--make-major-side-window))
+
+  ;;Remove ^M symbols
+  (add-hook 'comint-output-filter-functions
+            'comint-strip-ctrl-m)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -363,25 +435,86 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(aggressive-indent-comments-too t)
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(beacon-color "#F8BBD0")
+ '(blink-cursor-mode nil)
  '(column-number-mode t)
  '(compilation-message-face (quote default))
  '(cua-global-mark-cursor-color "#2aa198")
  '(cua-normal-cursor-color "#839496")
  '(cua-overwrite-cursor-color "#b58900")
+ '(cua-read-only-cursor-colTor "#859900")
  '(cua-read-only-cursor-color "#859900")
+ '(diary-entry-marker (quote font-lock-variable-name-face))
+ '(emms-mode-line-icon-image-cache
+   (quote
+    (image :type xpm :ascent center :data "/* XPM */
+static char *note[] = {
+/* width height num_colors chars_per_pixel */
+\"    10   11        2            1\",
+/* colors */
+\". c #358d8d\",
+\"# c None s None\",
+/* pixels */
+\"###...####\",
+\"###.#...##\",
+\"###.###...\",
+\"###.#####.\",
+\"###.#####.\",
+\"#...#####.\",
+\"....#####.\",
+\"#..######.\",
+\"#######...\",
+\"######....\",
+\"#######..#\" };")))
  '(enh-ruby-bounce-deep-indent 1)
- '(enh-ruby-deep-indent-paren 1)
- '(enh-ruby-hanging-indent-level 0)
- '(enh-ruby-hanging-paren-deep-indent-level 0)
- '(enh-ruby-hanging-paren-indent-level 0)
+ '(enh-ruby-deep-indent-paren nil t)
+ '(enh-ruby-deep-indent-paren-style 1)
+ '(enh-ruby-hanging-brace-deep-indent-level 0)
+ '(enh-ruby-hanging-brace-indent-level 2)
+ '(enh-ruby-hanging-indent-level 2)
+ '(enh-ruby-hanging-paren-deep-indent-level 0 t)
+ '(enh-ruby-hanging-paren-indent-level 2)
+ '(evil-emacs-state-cursor (quote ("#D50000" hbar)) t)
+ '(evil-insert-state-cursor (quote ("#D50000" bar)) t)
+ '(evil-normal-state-cursor (quote ("#F57F17" box)) t)
+ '(evil-visual-state-cursor (quote ("#66BB6A" box)) t)
  '(evil-want-Y-yank-to-eol nil)
- '(fci-rule-color "#073642" t)
+ '(fci-rule-color "#073642")
+ '(global-aggressive-indent-mode nil)
+ '(global-highlight-changes-mode nil)
  '(global-linum-mode t)
+ '(gnus-logo-colors (quote ("#0d7b72" "#adadad")) t)
+ '(gnus-mode-line-image-cache
+   (quote
+    (image :type xpm :ascent center :data "/* XPM */
+static char *gnus-pointer[] = {
+/* width height num_colors chars_per_pixel */
+\"    18    13        2            1\",
+/* colors */
+\". c #358d8d\",
+\"# c None s None\",
+/* pixels */
+\"##################\",
+\"######..##..######\",
+\"#####........#####\",
+\"#.##.##..##...####\",
+\"#...####.###...##.\",
+\"#..###.######.....\",
+\"#####.########...#\",
+\"###########.######\",
+\"####.###.#..######\",
+\"######..###.######\",
+\"###....####.######\",
+\"###..######.######\",
+\"###########.######\" };")) t)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
+ '(highlight-changes-face-list (quote (highlight-changes-1 highlight-changes-2)))
+ '(highlight-indent-guides-auto-enabled nil)
  '(highlight-symbol-colors
    (--map
     (solarized-color-blend it "#002b36" 0.25)
@@ -404,23 +537,41 @@ you should place your code here."
  '(hl-fg-colors
    (quote
     ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+ '(hl-sexp-background-color "#efebe9")
  '(linum-format "%4d")
  '(magit-diff-use-overlays nil)
+ '(notmuch-search-line-faces
+   (quote
+    (("unread" :foreground "#aeee00")
+     ("flagged" :foreground "#0a9dff")
+     ("deleted" :foreground "#ff2c4b" :bold t))))
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
+ '(op/personal-avatar
+   (quote https://pbs\.twimg\.com/profile_images/866090234584350720/UsgbHPs1_400x400\.jpg))
+ '(op/personal-github-link "https://github.com/localredhead")
+ '(op/repository-directory "~/Projects/localredhead.github.io")
+ '(op/site-domain "https://localredhead.github.io")
+ '(op/site-main-title "L. Strope")
+ '(op/site-sub-title "entropy in action")
+ '(op/theme (quote wy))
+ '(op/theme-root-directory "~/Projects/localredhead.github.io/tthemes")
  '(package-selected-packages
    (quote
-    (key-chord helm-cmd-t fixmee string-utils back-button button-lock ucs-utils smartrep nav-flash persistent-soft pcache list-utils ecb ag js2-refactor zonokai-theme zenburn-theme zen-and-art-theme yaml-mode xterm-color web-mode web-beautify unfill underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit systemd sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stickyfunc-enhance srefactor spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smex smeargle slim-mode shell-pop seti-theme scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reverse-theme reveal-in-osx-finder restclient-helm rbenv rainbow-mode rainbow-identifiers railscasts-theme purple-haze-theme pug-mode projectile-rails rake inflections professional-theme plantuml-mode planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme pbcopy pastels-on-dark-theme osx-trash osx-dictionary orgit organic-green-theme org-projectile org-present org-pomodoro alert log4e gntp org-download omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme ob-restclient ob-http noctilux-theme nlinum-relative nlinum niflheim-theme naquadah-theme mwim mustang-theme multi-term monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minitest minimal-theme material-theme markdown-toc markdown-mode majapahit-theme magit-gitflow madhat2r-theme lush-theme livid-mode skewer-mode simple-httpd light-soap-theme less-css-mode launchctl json-mode json-snatcher json-reformat multiple-cursors js2-mode js-doc jbeans-theme jazz-theme ir-black-theme inkpot-theme ibuffer-projectile htmlize heroku-theme hemisu-theme helm-gtags helm-gitignore helm-css-scss helm-company helm-c-yasnippet hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md ggtags gandalf-theme fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck flatui-theme flatland-theme firebelly-theme feature-mode farmhouse-theme evil-magit magit magit-popup git-commit with-editor espresso-theme eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode dracula-theme django-theme diff-hl darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme company-web web-completion-data company-tern dash-functional tern company-statistics company-restclient restclient know-your-http-well company color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode coffee-mode clues-theme chruby cherry-blossom-theme busybee-theme bundler inf-ruby bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme auto-yasnippet yasnippet auto-dictionary apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+    (ego blog-admin names ctable org-page key-chord helm-cmd-t fixmee string-utils back-button button-lock ucs-utils smartrep nav-flash persistent-soft pcache list-utils ecb ag js2-refactor zonokai-theme zenburn-theme zen-and-art-theme yaml-mode xterm-color web-mode web-beautify unfill underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit systemd sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stickyfunc-enhance srefactor spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smex smeargle slim-mode shell-pop seti-theme scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reverse-theme reveal-in-osx-finder restclient-helm rbenv rainbow-mode rainbow-identifiers railscasts-theme purple-haze-theme pug-mode projectile-rails rake inflections professional-theme plantuml-mode planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme pbcopy pastels-on-dark-theme osx-trash osx-dictionary orgit organic-green-theme org-projectile org-present org-pomodoro alert log4e gntp org-download omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme ob-restclient ob-http noctilux-theme nlinum-relative nlinum niflheim-theme naquadah-theme mwim mustang-theme multi-term monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minitest minimal-theme material-theme markdown-toc markdown-mode majapahit-theme magit-gitflow madhat2r-theme lush-theme livid-mode skewer-mode simple-httpd light-soap-theme less-css-mode launchctl json-mode json-snatcher json-reformat multiple-cursors js2-mode js-doc jbeans-theme jazz-theme ir-black-theme inkpot-theme ibuffer-projectile htmlize heroku-theme hemisu-theme helm-gtags helm-gitignore helm-css-scss helm-company helm-c-yasnippet hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md ggtags gandalf-theme fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck flatui-theme flatland-theme firebelly-theme feature-mode farmhouse-theme evil-magit magit magit-popup git-commit with-editor espresso-theme eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode dracula-theme django-theme diff-hl darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme company-web web-completion-data company-tern dash-functional tern company-statistics company-restclient restclient know-your-http-well company color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode coffee-mode clues-theme chruby cherry-blossom-theme busybee-theme bundler inf-ruby bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme auto-yasnippet yasnippet auto-dictionary apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(rspec-autosave-buffer t)
- '(ruby-deep-indent-paren (quote (40 91 93 t 123 125 41)))
- '(ruby-deep-indent-paren-style t)
- '(savehist-autosave-interval 60)
+ '(ruby-deep-indent-paren (quote (40 91 93 t 123 125 41 46)))
+ '(ruby-deep-indent-paren-style (quote space))
+ '(ruby-indent-tabs-mode t)
+ '(savehist-autosave-interval 10)
  '(show-paren-mode t)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
+ '(standard-indent 2)
+ '(tabbar-background-color "#ffffff")
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")
  '(tool-bar-mode nil)
@@ -460,4 +611,7 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Source Code Pro" :foundry "nil" :slant normal :weight normal :height 130 :width normal)))))
+ '(default ((t (:family "Source Code Pro" :foundry "nil" :slant normal :weight normal :height 130 :width normal))))
+ '(highlight-changes ((t (:foreground "red1"))))
+ '(highlight-changes-1 ((t (:foreground "#d33682"))) t)
+ '(highlight-changes-delete ((t (:foreground "red1")))))

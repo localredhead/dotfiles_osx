@@ -49,25 +49,13 @@ brew info redis
 
 if [ "$(command -v npm)" ]; then
     echo "..npm binary found"
-    npm config set proxy http://proxy.company.com:8080
-    npm config set https-proxy http://proxy.company.com:8080
+    # npm config set proxy http://proxy.company.com:8080
+    # npm config set https-proxy http://proxy.company.com:8080
     echo "...installing node dependencies: tern jsxhint jshint"
     npm install -g tern jsxhint jshint bower
     echo "think about installing ember-cli -g ?"
     echo "................................."
 fi
-
-echo "install Gerrit"
-sudo easy_install pip
-sudo pip install --upgrade setuptools
-sudo pip install git-review
-
-echo "setup hosts file to utilize flexpaper"
-echo "please enter password for sudo"
-sudo echo "127.0.0.1       adm.dev.prv" >> /etc/hosts
-
-createuser -P -s -e smp_dev
-createuser -P -s -e smp_test
 
 echo "Running this: `ruby /usr/local/Cellar/rsense/0.3/libexec/etc/config.rb >> .rsense`"
 ruby -e  /usr/local/Cellar/rsense/0.3/libexec/etc/config.rb >> .rsense

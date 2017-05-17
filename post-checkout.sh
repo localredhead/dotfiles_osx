@@ -50,12 +50,12 @@ else
     get_brew
 fi
 
+echo 'export PATH="/usr/local/opt/openssl/bin:$PATH"' >> ~/.bash_profile
 echo "................................."
 echo "backing up dot_files: .bashrc, .bash_profile, .guardrc, .irbrc, .profile, .rsense, .tmux.conf"
 
 cd ~/
 set_working_dir
-
 mkdir .dotfiles_bak
 mv -f .bashrc .dotfiles_bak/
 mv -f .bash_profile .dotfiles_bak/
@@ -64,17 +64,25 @@ mv -f .rsense .dotfiles_bak/
 mv -f .tmux.conf .dotfiles_bak/
 mv -f .irbrc .dotfiles_bak/
 mv -f .profile .dotfiles_bak/
+mv -f .npmrc .dotfiles_bak/
+mv -f .bowerrc .dotfiles_bak/
+mv -f .bundle .dotfiles_bak/
 
 echo "Use GNU STOW to symlink scripts in the root of $dotfiles_home"
 
 cd "$dotfiles_home"
 set_working_dir
+stow -t ~ bundle
 stow -t ~ bash
 stow -t ~ ruby
 stow -t ~ git
 stow -t ~ tmux
 stow -t ~ emacs
+stow -t ~ node
 
 echo "................................."
 echo ".... and run install_everything.sh (requires sudo)"
-./install_everything.sh
+./all-the-thing
+s.sh
+
+#stoken import --file=/Users/me/Documents/tss/me.sdtid --force

@@ -1,48 +1,40 @@
-## My personal dotfiles. With opinions.
+#### Whats inside?
+Homebrew bundler is used to install *nearly* everything and should be used to acquire all binaries.  Keeping your list of dependencies tidy is easily managed using bundler, specifically for anything installed with Homebrew.
 
-After pulling there are two scripts to run ```post-checkout.sh```, ```install-everything.sh``` and there are symlinks to configure.  I symlink all the dot files into ```~/``` to keep it simple.
+*See .bundle/Brewfile for a complete list of what will be installed*
 
-There are advantages to this setup if external deps are installed with homebrew, or dot files are updated during the discourse of day to day work.  The dotfiles are symlinked to a git repository so updates can be pushed continously.  Homebrew Bundler can be used to keep brew dependencies whitelisted.
+After these scripts complete your OSX will be:
+- Ready for rails development (rbenv)
+- Ready for node development (n)
+- Bootrapped with general tools like ack, ag, ctags, chrome, firefox, postgres, emacs :)
 
-The _post-checkout_ script sets up a few dependencies:
+The _post-checkout_ script is used to bootstrap dependencies for the _all-the-things_ script.
 
-1. It installs Homebrew
-1. It installs Homebew Bundler https://github.com/Homebrew/homebrew-bundle
-1. It installs Exuberent Ctags because they require special compilation flags before brew install is run.
+1. It installs Homebrew.
+1. It installs Homebrew Bundler https://github.com/Homebrew/homebrew-bundle.
+1. It installs Exuberent Ctags because it requires compilation flags before `brew install`
 1. It installs xcode cli tools.
+1. It symlinks dotfiles to `~/`.
 
-After these dependencies have been met it uses homebrew bundler to install everything listed in .bundle/Brewfile.
-A few key mentions:
-- **Emacs**              
-- **Postgres**            
-- **rsense**              - ruby code completion ;)
-- **ctags**               - I have them actually working.
-- **Node.js**             - enables tern.js (js linter)
-- **The silver searcher** - faster than grep
-- **Chrome and Firefox**  - ¯\_(ツ)_/¯ 
-- **rbenv**               - RVM replacement
-- **Hack Font**           - Great monospace font.  Other fonts can be installed with: ```brew cask install font-<name>```
-- **Java**
-- **GO**
-- **Pandoc**
-- **Openssl 1.0**
-- **Plantuml**
-- It attempts to install gerrit.  WIP.
+### How do I get it?
+There are two scripts to run: ```post-checkout.sh``` and ```all-the-things.sh```.
 
-### Installation
-
+1. ```git clone git@github.com:localredhead/dotfiles_osx.git```
+1. ```cd dotfiles_osx```
 1. ```chmod +x post-checkout.sh```
-1. ```chmod +x install-everything.sh```
+1. ```chmod +x all-the-things.sh```
 1. ```./post-checkout.sh```
-
-That should prompt as necessary and install all the things.  If it fails, fix the error and run the following by hand.  Post-checkout should run it without intervention if all goes well.
-1. ```./install_everything.sh```
-
+1. Follow prompts as necessary.
+1. If it fails, fix the error and run ```./all_the_things.sh``` after Post-checkout completes.  Post-checkout should run it without intervention if all goes well.
 
 ### After install steps
 1. At the very least, Rsense needs setup.  After symlinking ```.rsense``` to ```~/``` run the following:
 ```ruby /usr/local/Cellar/rsense/0.3/libexec/etc/config.rb >> .rsense```
 ** verify your rsense version number.
 
-
-####You may have to manually install pdftk, xquartz
+### Stay up to date!
+You will likely install more things with brew and want to include them in your brew bundle.  It's simple, after `brew install`:
+1. ```cd ~/.bundle/```
+1. ```brew bundle dump --force```
+- If you want to uninstall packages that are not listed in the bundle: `brew bundle cleanup --force`
+- If you want to check for updates: `brew bundle check`

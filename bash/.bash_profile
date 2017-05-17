@@ -28,19 +28,15 @@ export MAILER_USE_MAILCATCHER=true
 export SLACK_TOKEN=
 export PATH="$(brew --prefix)/bin:$PATH"
 
-#NVM
-#export NVM_DIR=~/.nvm
-#source $(brew --prefix nvm)/nvm.sh
-
-
 #NPM prefix
 export PREFIX="$(npm config get prefix)"
-
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
 export PATH="~/.node/bin:$PATH"
 export PATH
-#export PATH="$HOME/.ndenv/bin:$PATH"
-#eval "$(ndenv init -)"
+
+# get around auth proxy
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+export HTTPS_PROXY=http://us01bcsg02.org.nasdaqomx.com:8080
