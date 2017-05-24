@@ -160,7 +160,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 15
+                               :size 13
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -338,6 +338,20 @@ explicitly specified that a variable should be set before a package is loaded,
 
 you should place your code here."
 
+  ;;force write of read-only buffers
+  (defun jack-in ()
+    (interactive)
+    (comint-mode)
+    (setq buffer-read-only nil)
+    (compilation-shell-minor-mode))
+
+  ;;autosave
+  (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
+
+  ;;EGO blogging
+
+  (require 'org-page)
+  (setq op/category-ignore-list '("themes"))
   (require 'ego)
   (ego-add-to-alist 'ego-project-config-alist
                   '(("localredhead"
@@ -348,8 +362,8 @@ you should place your code here."
                      :site-main-title "L. Strope"
                      :site-sub-title "entropy in action"
                      :theme (me)
-                     :summary (("Archive" :year :updates 50) ("tags" :tags))
-                     :default-category "blog"
+                     :summary (("tags" :tags))
+                     :default-category "posts"
                      :about ("About" "/about/")
                      :source-browse-url ("Github" "https://github.com/localredhead")
                      :personal-avatar "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAnvAAAAJGNiOTc0NDI0LTZlMDYtNDdiNS1hOGZmLTU0ZTNlZTZlZjMwMQ.jpg"
@@ -359,6 +373,7 @@ you should place your code here."
                      :category-ignore-list ("themes" "assets" "notes" "moleskin"))
                     ;; more projects or sites config can be added here
                     ))
+
 
   ;; ORG
   (setq org-default-notes-file (concat org-directory "/remember.org.gpg"))
@@ -484,7 +499,8 @@ static char *note[] = {
  '(evil-normal-state-cursor (quote ("#F57F17" box)) t)
  '(evil-visual-state-cursor (quote ("#66BB6A" box)) t)
  '(evil-want-Y-yank-to-eol nil)
- '(fci-rule-color "#073642")
+ '(fci-rule-color "#073642" t)
+ '(focus-autosave-mode t)
  '(global-aggressive-indent-mode nil)
  '(global-highlight-changes-mode nil)
  '(global-linum-mode t)
@@ -537,6 +553,10 @@ static char *gnus-pointer[] = {
  '(hl-fg-colors
    (quote
     ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+ '(hl-paren-background-colors
+   (quote
+    ("#00FF99" "#CCFF99" "#FFCC99" "#FF9999" "#FF99CC" "#CC99FF" "#9999FF" "#99CCFF" "#99FFCC" "#7FFF00")))
+ '(hl-paren-colors (quote ("#326B6B")))
  '(hl-sexp-background-color "#efebe9")
  '(linum-format "%4d")
  '(magit-diff-use-overlays nil)
@@ -556,10 +576,10 @@ static char *gnus-pointer[] = {
  '(op/site-main-title "L. Strope")
  '(op/site-sub-title "entropy in action")
  '(op/theme (quote wy))
- '(op/theme-root-directory "~/Projects/localredhead.github.io/tthemes")
+ '(op/theme-root-directory "~/Projects/localredhead.github.io/themes")
  '(package-selected-packages
    (quote
-    (ego blog-admin names ctable org-page key-chord helm-cmd-t fixmee string-utils back-button button-lock ucs-utils smartrep nav-flash persistent-soft pcache list-utils ecb ag js2-refactor zonokai-theme zenburn-theme zen-and-art-theme yaml-mode xterm-color web-mode web-beautify unfill underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit systemd sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stickyfunc-enhance srefactor spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smex smeargle slim-mode shell-pop seti-theme scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reverse-theme reveal-in-osx-finder restclient-helm rbenv rainbow-mode rainbow-identifiers railscasts-theme purple-haze-theme pug-mode projectile-rails rake inflections professional-theme plantuml-mode planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme pbcopy pastels-on-dark-theme osx-trash osx-dictionary orgit organic-green-theme org-projectile org-present org-pomodoro alert log4e gntp org-download omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme ob-restclient ob-http noctilux-theme nlinum-relative nlinum niflheim-theme naquadah-theme mwim mustang-theme multi-term monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minitest minimal-theme material-theme markdown-toc markdown-mode majapahit-theme magit-gitflow madhat2r-theme lush-theme livid-mode skewer-mode simple-httpd light-soap-theme less-css-mode launchctl json-mode json-snatcher json-reformat multiple-cursors js2-mode js-doc jbeans-theme jazz-theme ir-black-theme inkpot-theme ibuffer-projectile htmlize heroku-theme hemisu-theme helm-gtags helm-gitignore helm-css-scss helm-company helm-c-yasnippet hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md ggtags gandalf-theme fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck flatui-theme flatland-theme firebelly-theme feature-mode farmhouse-theme evil-magit magit magit-popup git-commit with-editor espresso-theme eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode dracula-theme django-theme diff-hl darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme company-web web-completion-data company-tern dash-functional tern company-statistics company-restclient restclient know-your-http-well company color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode coffee-mode clues-theme chruby cherry-blossom-theme busybee-theme bundler inf-ruby bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme auto-yasnippet yasnippet auto-dictionary apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+    (git focus-autosave-mode ego blog-admin names ctable org-page key-chord helm-cmd-t fixmee string-utils back-button button-lock ucs-utils smartrep nav-flash persistent-soft pcache list-utils ecb ag js2-refactor zonokai-theme zenburn-theme zen-and-art-theme yaml-mode xterm-color web-mode web-beautify unfill underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit systemd sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stickyfunc-enhance srefactor spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smex smeargle slim-mode shell-pop seti-theme scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reverse-theme reveal-in-osx-finder restclient-helm rbenv rainbow-mode rainbow-identifiers railscasts-theme purple-haze-theme pug-mode projectile-rails rake inflections professional-theme plantuml-mode planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme pbcopy pastels-on-dark-theme osx-trash osx-dictionary orgit organic-green-theme org-projectile org-present org-pomodoro alert log4e gntp org-download omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme ob-restclient ob-http noctilux-theme nlinum-relative nlinum niflheim-theme naquadah-theme mwim mustang-theme multi-term monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minitest minimal-theme material-theme markdown-toc markdown-mode majapahit-theme magit-gitflow madhat2r-theme lush-theme livid-mode skewer-mode simple-httpd light-soap-theme less-css-mode launchctl json-mode json-snatcher json-reformat multiple-cursors js2-mode js-doc jbeans-theme jazz-theme ir-black-theme inkpot-theme ibuffer-projectile htmlize heroku-theme hemisu-theme helm-gtags helm-gitignore helm-css-scss helm-company helm-c-yasnippet hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md ggtags gandalf-theme fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck flatui-theme flatland-theme firebelly-theme feature-mode farmhouse-theme evil-magit magit magit-popup git-commit with-editor espresso-theme eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode dracula-theme django-theme diff-hl darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme company-web web-completion-data company-tern dash-functional tern company-statistics company-restclient restclient know-your-http-well company color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode coffee-mode clues-theme chruby cherry-blossom-theme busybee-theme bundler inf-ruby bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme auto-yasnippet yasnippet auto-dictionary apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
