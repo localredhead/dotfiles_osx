@@ -4,7 +4,6 @@
 A complete development environment setup that makes full use of Homebrew, Homebrew bundler, and some light bash scripting.
 1. Gnu Stow is used to symlink dotfiles in the `~/` directory.
 1. Homebrew bundler is used to install *nearly* everything.
-To make the most of this, Homebrew should be used to acquire dependencies.  Keeping your list of dependencies tidy is easily managed using bundler.
 
 ##### After these scripts finish executing you will be ready for
 - rails development via (rbenv)
@@ -38,6 +37,7 @@ To make the most of this, Homebrew should be used to acquire dependencies.  Keep
 1. At the very least, Rsense needs setup.  After symlinking ```.rsense``` to ```~/``` run the following:
 ```ruby /usr/local/Cellar/rsense/0.3/libexec/etc/config.rb >> .rsense```
 ** verify your rsense version number.
+1. To make the most of this, Homebrew should be used to acquire dependencies.  Keeping your list of dependencies tidy is easily managed using bundler.
 
 #### Stay up to date!
 You will likely install more things with brew and want to include them in your brew bundle.  It's simple, after `brew install`:

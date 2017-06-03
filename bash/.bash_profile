@@ -40,3 +40,4 @@ export PATH
 # get around auth proxy
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 export HTTPS_PROXY=http://us01bcsg02.org.nasdaqomx.com:8080
+export PATH="/usr/local/sbin:$PATH"
