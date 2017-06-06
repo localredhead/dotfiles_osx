@@ -24,9 +24,9 @@ function set_working_dir {
 }
 
 function get_brew {
-    cd .bundle
-    set_working_dir
     brew tap Homebrew/bundle
+    cd bundle/.bundle/
+    set_working_dir
     brew bundle exec -- brew bundle install
     brew unlink emacs
     brew link --overwrite emacs
