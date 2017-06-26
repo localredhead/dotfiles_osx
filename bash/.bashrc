@@ -1,3 +1,4 @@
+eval $(gpg-agent --daemon)
 eval "$(rbenv init -)"
 
 ### Added by the Heroku Toolbelt

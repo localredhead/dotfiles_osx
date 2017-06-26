@@ -78,8 +78,8 @@ stow -t ~ tmux
 stow -t ~ emacs
 stow -t ~ node
 
-echo 'export PATH="/usr/local/opt/openssl/bin:$PATH"' >> ~/.bash_profile
-echo "................................."
+# echo 'export PATH="/usr/local/opt/openssl/bin:$PATH"' >> ~/.bash_profile
+# echo "................................."
 
 echo "................................."
 echo ".... and run install_everything.sh (requires sudo)"

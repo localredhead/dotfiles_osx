@@ -47,20 +47,24 @@ echo "................................."
 brew info redis
 #brew info memcached
 
-if [ "$(command -v npm)" ]; then
-    echo "..npm binary found"
-    # npm config set proxy http://proxy.company.com:8080
-    # npm config set https-proxy http://proxy.company.com:8080
+# if [ "$(command -v npm)" ]; then
+#     echo "..npm binary found"
+#     # npm config set proxy http://proxy.company.com:8080
+#     # npm config set https-proxy http://proxy.company.com:8080
+#     echo "...installing node dependencies: tern jsxhint jshint"
+#     npm install -g tern jsxhint jshint bower
+#     echo "think about installing ember-cli -g ?"
+#     echo "................................."
+# fi
+
+if [ "$(command -v yarn)" ]; then
+    echo "..yarn binary found"
     echo "...installing node dependencies: tern jsxhint jshint"
-    npm install -g tern jsxhint jshint bower
-    echo "think about installing ember-cli -g ?"
+    yarn global add n
+    n latest
+    yarn global add tern jsxhint jshint bower
     echo "................................."
 fi
-
-echo "Running this: `ruby /usr/local/Cellar/rsense/0.3/libexec/etc/config.rb >> .rsense`"
-ruby -e  /usr/local/Cellar/rsense/0.3/libexec/etc/config.rb >> .rsense
-
-export RBENV_ROOT=/usr/local/var/rbenv >> ~/.bash_profile
 
 brew services restart redis
 #brew services restart memcached
